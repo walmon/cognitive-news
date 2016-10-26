@@ -880,7 +880,7 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
 
       //return res.json(updateMessage(payload, data));
       var returnMessage = updateMessage(payload, data);
-      console.log(returnMessage);
+      //console.log(returnMessage);
       var messageData = {
         recipient: {
           id: recipientId
