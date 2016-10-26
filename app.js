@@ -16,7 +16,8 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+  watson = require('watson-developer-cloud');
 
 require('dotenv').config()
 
@@ -57,6 +58,15 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
+
+
+
+var conversation = watson.conversation({
+  username: process.env.CONVERSATION_USERNAME,
+  password: process.env.CONVERSATION_PASSWORD,
+  version: 'v1',
+  version_date: '2016-09-20'
+});
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
@@ -521,18 +531,28 @@ function sendFileMessage(recipientId) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: messageText,
-      metadata: "DEVELOPER_DEFINED_METADATA"
+  conversation.message(payload, function (err, data) {
+    if (err) {
+      console.log(err);
+      
     }
-  };
+    //return res.json(updateMessage(payload, data));
+    var returnMessage = updateMessage(payload, data); 
+    console.log(returnMessage);
+    var messageData = {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          text: returnMessage.output.text,
+          metadata: "DEVELOPER_DEFINED_METADATA"
+        }
+      };
 
-  callSendAPI(messageData);
+    callSendAPI(messageData);
+  });
 }
+
 
 /*
  * Send a button message using the Send API.
@@ -827,6 +847,46 @@ function callSendAPI(messageData) {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
     }
   });  
+}
+
+
+/* WATSON CONVERSATION */
+
+function updateMessage(input, response) {
+  var responseText = null;
+  var id = null;
+  if (!response.output) {
+    response.output = {};
+  } else {
+    //if ( logs ) {
+    // If the logs db is set, then we want to record all input and responses
+    //  id = uuid.v4();
+    //  logs.insert( {'_id': id, 'request': input, 'response': response, 'time': new Date()});
+    //}
+    return response;
+  }
+  if (response.intents && response.intents[0]) {
+    var intent = response.intents[0];
+    // Depending on the confidence of the response the app can return different messages.
+    // The confidence will vary depending on how well the system is trained. The service will always try to assign
+    // a class/intent to the input. If the confidence is low, then it suggests the service is unsure of the
+    // user's intent . In these cases it is usually best to return a disambiguation message
+    // ('I did not understand your intent, please rephrase your question', etc..)
+    if (intent.confidence >= 0.75) {
+      responseText = 'Entendí que su intención era ' + intent.intent;
+    } else if (intent.confidence >= 0.5) {
+      responseText = 'Creo que su intención era ' + intent.intent;
+    } else {
+      responseText = 'No entendí tu intención';
+    }
+  }
+  response.output.text = responseText;
+  if (logs) {
+    // If the logs db is set, then we want to record all input and responses
+    //id = uuid.v4();
+    //logs.insert( {'_id': id, 'request': input, 'response': response, 'time': new Date()});
+  }
+  return response;
 }
 
 // Start server
