@@ -845,6 +845,7 @@ function callSendAPI(messageData) {
 /* WATSON CONVERSATION */
 
 function sendWatsonTextMessage(recipientId, messageText, payload) {
+  console.log('Payload:');
   console.log(payload);
   try {
     payload = JSON.parse(payload);
