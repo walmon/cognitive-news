@@ -240,7 +240,13 @@ function receivedMessage(event) {
   var isEcho = message.is_echo;
   var messageId = message.mid;
   var appId = message.app_id;
-  var metadata = message.metadata;
+  var metadata = {};
+  try{
+    console.log(metadata);
+    JSON.parse(metadata);
+  }catch(ex){
+
+  }
 
   // You may get a text or attachment but not both
   var messageText = message.text;
@@ -320,7 +326,7 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        sendWatsonTextMessage(senderID, messageText, metadata);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
@@ -531,26 +537,17 @@ function sendFileMessage(recipientId) {
  *
  */
 function sendTextMessage(recipientId, messageText) {
-  conversation.message(payload, function (err, data) {
-    if (err) {
-      console.log(err);
-      
-    }
-    //return res.json(updateMessage(payload, data));
-    var returnMessage = updateMessage(payload, data); 
-    console.log(returnMessage);
-    var messageData = {
+  var messageData = {
         recipient: {
           id: recipientId
         },
         message: {
-          text: returnMessage.output.text,
+          text: messageText,
           metadata: "DEVELOPER_DEFINED_METADATA"
         }
       };
 
     callSendAPI(messageData);
-  });
 }
 
 
@@ -851,6 +848,29 @@ function callSendAPI(messageData) {
 
 
 /* WATSON CONVERSATION */
+
+function sendWatsonTextMessage(recipientId, messageText, payload) {
+  conversation.message(payload, function (err, data) {
+    if (err) {
+      console.log(err);
+      
+    }
+    //return res.json(updateMessage(payload, data));
+    var returnMessage = updateMessage(payload, data); 
+    console.log(returnMessage);
+    var messageData = {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          text: returnMessage.output.text,
+          metadata: JSON.stringify(payload)
+        }
+      };
+
+    callSendAPI(messageData);
+  });
+}
 
 function updateMessage(input, response) {
   var responseText = null;
