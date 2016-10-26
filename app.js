@@ -855,7 +855,7 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
       input: {}
     };
   }
-  payload.input = messageText;
+  payload.input = {text:messageText};
 
   conversation.message(payload, function (err, data) {
     if (err) {
