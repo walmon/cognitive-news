@@ -844,19 +844,20 @@ function callSendAPI(messageData) {
 
 /* WATSON CONVERSATION */
 
-function sendWatsonTextMessage(recipientId, messageText, payload) {
-  console.log('Payload:' + payload);
-  try {
-    payload = JSON.parse(payload);
-  } catch (ex) {
-    payload = {
+function sendWatsonTextMessage(recipientId, messageText, metadata) {
+  var payload = {
       workspace_id: workspace,
       context: {},
       input: {}
     };
+
+  try {
+    payload.context = JSON.parse(metadata);
+  } catch (ex) {
+    // no context yet!
   }
+
   payload.input = {text:messageText};
-  console.log('Set Payload:' + JSON.stringify(payload));
 
   conversation.message(payload, function (err, data) {
     if (err) {
@@ -876,8 +877,8 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
 
       //return res.json(updateMessage(payload, data));
       var returnMessage = updateMessage(payload, data);
-      console.log('Return Message: ' + JSON.stringify(returnMessage));
-      payload.context = returnMessage.context;
+      console.log('Return Message: ' + JSON.stringify(returnMessage.context));
+      
       //console.log(returnMessage);
       var messageData = {
         recipient: {
@@ -885,7 +886,7 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
         },
         message: {
           text: isArray(returnMessage.output.text) ? returnMessage.output.text[0] : returnMessage.output.text,
-          metadata: JSON.stringify(payload)
+          metadata: JSON.stringify(returnMessage.context)
         }
       };
 
