@@ -242,7 +242,8 @@ function receivedMessage(event) {
   var messageId = message.mid;
   var appId = message.app_id;
   var metadata = message.metadata;
-
+  console.log('Received metadata: ');
+  console.log(metadata);
   // You may get a text or attachment but not both
   var messageText = message.text;
   var messageAttachments = message.attachments;
@@ -857,6 +858,8 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
     };
   }
   payload.input = {text:messageText};
+  console.log('Set Payload:');
+  console.log(JSON.stringify(payload));
 
   conversation.message(payload, function (err, data) {
     if (err) {
