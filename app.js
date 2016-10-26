@@ -67,6 +67,7 @@ var conversation = watson.conversation({
   version: 'v1',
   version_date: '2016-09-20'
 });
+var workspace = process.env.WORKSPACE_ID;
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
@@ -240,13 +241,7 @@ function receivedMessage(event) {
   var isEcho = message.is_echo;
   var messageId = message.mid;
   var appId = message.app_id;
-  var metadata = {};
-  try{
-    console.log(metadata);
-    JSON.parse(metadata);
-  }catch(ex){
-
-  }
+  var metadata = message.metadata;
 
   // You may get a text or attachment but not both
   var messageText = message.text;
@@ -850,10 +845,21 @@ function callSendAPI(messageData) {
 /* WATSON CONVERSATION */
 
 function sendWatsonTextMessage(recipientId, messageText, payload) {
+  console.log(payload);
+  try{
+    payload = JSON.parse(payload);
+  }catch(ex){
+    payload = {
+      workspace_id: workspace,
+      context: {},
+      input: {}
+    };
+  }
+  payload.input = messageText;
+
   conversation.message(payload, function (err, data) {
     if (err) {
       console.log(err);
-      
     }
     //return res.json(updateMessage(payload, data));
     var returnMessage = updateMessage(payload, data); 
