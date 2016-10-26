@@ -882,7 +882,7 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
           id: recipientId
         },
         message: {
-          text: returnMessage.output.text,
+          text: isArray(returnMessage.output.text) ? returnMessage.output.text[0] : returnMessage.output.text,
           metadata: JSON.stringify(payload)
         }
       };
@@ -927,6 +927,11 @@ function updateMessage(input, response) {
     //logs.insert( {'_id': id, 'request': input, 'response': response, 'time': new Date()});
   }
   return response;
+}
+
+
+function isArray(obj){
+    return !!obj && Array === obj.constructor;
 }
 
 // Start server
