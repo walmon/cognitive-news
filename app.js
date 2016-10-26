@@ -876,7 +876,7 @@ function sendWatsonTextMessage(recipientId, messageText, payload) {
 
       //return res.json(updateMessage(payload, data));
       var returnMessage = updateMessage(payload, data);
-      console.log('Return Message: ' + JSON.strinfigy(returnMessage));
+      console.log('Return Message: ' + JSON.stringify(returnMessage));
       payload.context = returnMessage.context;
       //console.log(returnMessage);
       var messageData = {
