@@ -846,10 +846,10 @@ function callSendAPI(messageData) {
 
 function sendWatsonTextMessage(recipientId, messageText, metadata) {
   var payload = {
-      workspace_id: workspace,
-      context: {},
-      input: {}
-    };
+    workspace_id: workspace,
+    context: {},
+    input: {}
+  };
 
   try {
     payload.context = JSON.parse(metadata);
@@ -857,7 +857,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
     // no context yet!
   }
 
-  payload.input = {text:messageText};
+  payload.input = { text: messageText };
 
   conversation.message(payload, function (err, data) {
     if (err) {
@@ -878,8 +878,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
       //return res.json(updateMessage(payload, data));
       var returnMessage = updateMessage(payload, data);
       console.log('Return Message: ' + JSON.stringify(returnMessage.context));
-      
-      //console.log(returnMessage);
+
       var messageData = {
         recipient: {
           id: recipientId
@@ -889,6 +888,47 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
           metadata: JSON.stringify(returnMessage.context)
         }
       };
+
+      if (returnMessage.context.tiempo && returnMessage.context.categoria) {
+
+        messageData.attachment = {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [{
+              title: "Conversación + Integración + Valor = Chatbots",
+              subtitle: "Publicación por Walter Montes",
+              item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+              image_url: SERVER_URL + "/assets/chatbots.jpg-large",
+              buttons: [{
+                type: "web_url",
+                url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                title: "Leer noticia"
+              }, {
+                  type: "web_url",
+                  url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                  title: "Otras similares"
+                }],
+            }, {
+                title: "Cognitiva impulsa alianzas para la adopción de IBM Watson",
+                subtitle: "Con firmas consultoras globales y locales para clientes premium, con desarrolladoras para uso de la tecnología en soluciones y con consultores para resolver situaciones específicas",
+                item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                image_url: SERVER_URL + "/assets/cognitiva.jpg",
+                buttons: [{
+                  type: "web_url",
+                  url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                  title: "Leer noticia"
+                }, {
+                    type: "web_url",
+                    url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                    title: "Otras similares"
+                  }]
+              }]
+          }
+        }
+      }
+      //console.log(returnMessage);
+
 
       callSendAPI(messageData);
     }
@@ -933,8 +973,8 @@ function updateMessage(input, response) {
 }
 
 
-function isArray(obj){
-    return !!obj && Array === obj.constructor;
+function isArray(obj) {
+  return !!obj && Array === obj.constructor;
 }
 
 // Start server
