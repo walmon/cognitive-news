@@ -910,8 +910,8 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
                   title: "Otras similares"
                 }],
             }, {
-                title: "Cognitiva impulsa alianzas para la adopción de IBM Watson",
-                subtitle: "Con firmas consultoras globales y locales para clientes premium, con desarrolladoras para uso de la tecnología en soluciones y con consultores para resolver situaciones específicas",
+                title: "Cognitiva impulsa alianzas para adopción de IBM Watson",
+                subtitle: "Alianzas con firmas de consultoría",
                 item_url: "http://cognitiva.la",
                 image_url: SERVER_URL + "/assets/cognitiva.jpg",
                 buttons: [{
