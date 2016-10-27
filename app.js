@@ -898,40 +898,40 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
             elements: [{
               title: "Conversación + Integración + Valor = Chatbots",
               subtitle: "Publicación por Walter Montes",
-              item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+              item_url: "http://cognitiva.la",
               image_url: SERVER_URL + "/assets/chatbots.jpg-large",
               buttons: [{
                 type: "web_url",
-                url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                url: "http://cognitiva.la",
                 title: "Leer noticia"
               }, {
                   type: "web_url",
-                  url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                  url: "http://cognitiva.la",
                   title: "Otras similares"
                 }],
             }, {
                 title: "Cognitiva impulsa alianzas para la adopción de IBM Watson",
                 subtitle: "Con firmas consultoras globales y locales para clientes premium, con desarrolladoras para uso de la tecnología en soluciones y con consultores para resolver situaciones específicas",
-                item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                item_url: "http://cognitiva.la",
                 image_url: SERVER_URL + "/assets/cognitiva.jpg",
                 buttons: [{
                   type: "web_url",
-                  url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                  url: "http://cognitiva.la",
                   title: "Leer noticia"
                 }, {
                     type: "web_url",
-                    url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                    url: "http://cognitiva.la",
                     title: "Otras similares"
                   }]
               },
               {
                 title: "Más noticias de " + returnMessage.context.categoria + " para " + returnMessage.context.tiempo,
                 subtitle: "Siempre lo último en su plataforma de confianza",
-                item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                item_url: "http://cognitiva.la",
                 image_url: SERVER_URL + "/assets/cognitiva.jpg",
                 buttons: [{
                   type: "web_url",
-                  url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                  url: "http://cognitiva.la",
                   title: "Leer más"
                 }],
               }]
