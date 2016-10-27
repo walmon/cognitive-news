@@ -884,7 +884,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
           id: recipientId
         },
         message: {
-          text: isArray(returnMessage.output.text) ? returnMessage.output.text[0] : returnMessage.output.text,
+
           metadata: JSON.stringify(returnMessage.context)
         }
       };
@@ -923,9 +923,22 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
                     url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
                     title: "Otras similares"
                   }]
+              },
+              {
+                title: "Más noticias de " + returnMessage.context.categoria + " para " + returnMessage.content_type.tiempo,
+                subtitle: "Siempre lo último en su plataforma de confianza",
+                item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                image_url: SERVER_URL + "/assets/cognitiva.jpg",
+                buttons: [{
+                  type: "web_url",
+                  url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
+                  title: "Leer más"
+                }],
               }]
           }
         }
+      } else {
+        messageData.message.text = isArray(returnMessage.output.text) ? returnMessage.output.text[0] : returnMessage.output.text;
       }
       //console.log(returnMessage);
 
