@@ -897,7 +897,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
             template_type: "generic",
             elements: [{
               title: "Conversación + Integración + Valor = Chatbots",
-              subtitle: "Publicación por Walter Montes",
+              subtitle: "Tecnología",
               item_url: "http://cognitiva.la",
               image_url: SERVER_URL + "/assets/chatbots.jpg-large",
               buttons: [{
@@ -910,7 +910,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
                   title: "Otras similares"
                 }],
             }, {
-                title: "Cognitiva impulsa alianzas para adopción de IBM Watson",
+                title: "Cognitiva: alianzas para adopción de IBM Watson",
                 subtitle: "Alianzas con firmas de consultoría",
                 item_url: "http://cognitiva.la",
                 image_url: SERVER_URL + "/assets/cognitiva.jpg",
