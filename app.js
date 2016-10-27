@@ -891,7 +891,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
 
       if (returnMessage.context.tiempo && returnMessage.context.categoria) {
 
-        messageData.attachment = {
+        messageData.message.attachment = {
           type: "template",
           payload: {
             template_type: "generic",
