@@ -925,7 +925,7 @@ function sendWatsonTextMessage(recipientId, messageText, metadata) {
                   }]
               },
               {
-                title: "Más noticias de " + returnMessage.context.categoria + " para " + returnMessage.content_type.tiempo,
+                title: "Más noticias de " + returnMessage.context.categoria + " para " + returnMessage.context.tiempo,
                 subtitle: "Siempre lo último en su plataforma de confianza",
                 item_url: "https://www.larepublica.net/noticia/conversacion_mas_integracion_mas_valor__chatbots/tw",
                 image_url: SERVER_URL + "/assets/cognitiva.jpg",
